@@ -611,6 +611,9 @@ const saveAsHtml = async ({ page, filePath, options, route, fs }) => {
       console.log('⚠️  warning: 404 page title does not contain "404" string');
     mkdirp.sync(path.dirname(filePath));
     fs.writeFileSync(filePath, minifiedContent);
+  } else if (!options.saveAsIndexHtml && route !== "/") {
+    mkdirp.sync(path.dirname(filePath));
+    fs.writeFileSync(`${filePath}.html`, minifiedContent);
   } else {
     if (title.includes("404"))
       console.log(`⚠️  warning: page not found ${route}`);
